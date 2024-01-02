@@ -2,6 +2,14 @@ import "./style.css";
 import typescriptLogo from "./typescript.svg";
 import viteLogo from "/vite.svg";
 
+let num: number = 0;
+type Id = () => string;
+
+const generateRandom: Id = function (): string {
+  num++;
+  return `my_id${num}`;
+};
+
 const addItem = (): void => {
   const first = document.getElementById(
     "exampleFormControlTextarea1"
@@ -22,8 +30,17 @@ const addItem = (): void => {
       "ul-class"
     ) as HTMLInputElement;
     const newItem = document.createElement("li");
+    const newItemText = document.createElement("span");
+
     newItem.textContent = textArreaValue;
-    newItem.classList.add("list-group-item", "flex","w-100","flex-wrap","break-all");
+    newItem.classList.add(
+      "list-group-item",
+      "flex",
+      "w-100",
+      "flex-wrap",
+      "break-all",
+      "justify-end"
+    );
     const svgCode =
       '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash-fill" viewBox="0 0 16 16"><path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5M8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5m3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0"/></svg>';
     const editSvg =
@@ -32,14 +49,29 @@ const addItem = (): void => {
     editBtn.innerHTML = editSvg;
     editBtn.classList.add("mt-1");
     const del = document.createElement("span");
-    del.classList.add("mt-1");
-      del.innerHTML = svgCode;
-      const combiner = document.createElement("span");
-      combiner.appendChild(del);
-      combiner.appendChild(editBtn)
-      combiner.classList.add("flex","justify-end")
-     newItem.appendChild(combiner);
-   
+    del.classList.add("mt-1",'delete-button');
+    del.innerHTML = svgCode;
+    del.addEventListener("click", function handleClick(event) {
+      const fetchUl = document.getElementById("ul-class") as HTMLElement;
+
+      const liItems = fetchUl.getElementsByTagName("li");
+        const target = event.target as HTMLElement;
+        const liToRemove = target.closest('li');
+
+        if (liToRemove) {
+            liToRemove.remove();
+        }
+     
+    });
+
+    editBtn.addEventListener("click", function handleClick(event) {
+      const text = document.getElementsByTagName("li");
+    });
+    const combiner = document.createElement("span");
+    combiner.appendChild(del);
+    combiner.appendChild(editBtn);
+    combiner.classList.add("flex", "gap-2");
+    newItem.appendChild(combiner);
 
     todoList.appendChild(newItem);
 
