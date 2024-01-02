@@ -39,7 +39,7 @@ const addItem = (): void => {
       "w-100",
       "flex-wrap",
       "break-all",
-      "justify-end"
+      "justify-between"
     );
     const svgCode =
       '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash-fill" viewBox="0 0 16 16"><path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5M8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5m3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0"/></svg>';
@@ -65,12 +65,16 @@ const addItem = (): void => {
     });
 
     editBtn.addEventListener("click", function handleClick(event) {
-      const text = document.getElementsByTagName("li");
+        const target = event.target as HTMLElement;
+        const selectedLi = target.closest("li");
+        const value = selectedLi?.value;
+        console.log(value,"edit value");
+        
     });
     const combiner = document.createElement("span");
     combiner.appendChild(del);
-    combiner.appendChild(editBtn);
-    combiner.classList.add("flex", "gap-2");
+    // combiner.appendChild(editBtn);
+    combiner.classList.add("flex", "gap-4");
     newItem.appendChild(combiner);
 
     todoList.appendChild(newItem);
